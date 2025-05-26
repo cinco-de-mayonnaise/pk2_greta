@@ -42,7 +42,7 @@ private:
     }; 
 
     MenuRect bg_square;
-    int menu_nyt = MENU_MAIN;
+    int menu_now = MENU_MAIN;
     int menu_lue_kontrollit = 0;
  
     PK2gui::TextInput playerNameEdit;

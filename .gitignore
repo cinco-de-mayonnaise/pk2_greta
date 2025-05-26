@@ -41,3 +41,6 @@ launcher/*.o
 /mingw/x86_64/PK2/
 
 start.sh
+src/main.cpp
+.gitignore
+src/main.cpp
