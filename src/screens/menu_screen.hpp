@@ -6,6 +6,7 @@
 
 #include "screen.hpp"
 #include "widgets.hpp"
+#include <list>
 
 enum MENU {
 
@@ -19,7 +20,10 @@ enum MENU {
 	MENU_LOAD,
 	MENU_SAVE,
 	MENU_LANGUAGE,
-    MENU_LINKS
+    MENU_LINKS,
+
+
+    MENU_SCROLLTEST
 };
 
 class MenuScreen: public Screen{
@@ -69,4 +73,17 @@ private:
     void Draw_Menu_Language();
     void Draw_Menu_Settings();
     void Draw_Menu_Links();
+
+    // in-progress: abdullah
+    void Draw_ScrollTest();
+
+    class ScrollBox {
+    public:
+        class ScrollItem {
+            int a = 0;
+        };
+
+    private:
+        std::list<ScrollBox::ScrollItem> scrollitems;
+    };
 };

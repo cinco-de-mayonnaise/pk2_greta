@@ -381,7 +381,7 @@ void MenuScreen::Draw_Menu_Settings(){
 	}
 	my += 20;
 	if (Draw_Menu_Text("Scrolling test",180,my)){
-		menu_now = MENU_SOUNDS;
+		menu_now = MENU_SCROLLTEST;
 	}
 
 	if (Draw_Menu_Text(PK_txt.mainmenu_return,180,400)){
@@ -1133,6 +1133,25 @@ void MenuScreen::Draw_Menu_Language() {
 
 }
 
+void MenuScreen::Draw_ScrollTest(){
+	int mx = 0, option;
+	this->my = 150;
+	
+	static bool moreOptions = false;
+	bool save_settings = false;
+
+	Draw_BGSquare(40, 70, 640-40, 410, 224);
+
+	PDraw::font_write_line(fontti2, "scrolling test! aテক্ষাنà",50,90);
+
+
+
+	if (Draw_Menu_Text(PK_txt.settingsmenu_return,180,400)){
+		menu_now = MENU_SETTINGS;
+		moreOptions = false;
+	}
+}
+
 void MenuScreen::Draw() {
 
 	PDraw::image_clip(bg_screen);
@@ -1151,6 +1170,8 @@ void MenuScreen::Draw() {
 		case MENU_SAVE 	   : Draw_Menu_Save();     break;
 		case MENU_LANGUAGE : Draw_Menu_Language(); break;
 		case MENU_LINKS    : Draw_Menu_Links();    break;
+
+		case MENU_SCROLLTEST: Draw_ScrollTest();   break;
 		default            : Draw_Menu_Main();     break;
 	}
 
