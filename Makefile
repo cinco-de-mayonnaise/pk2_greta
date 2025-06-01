@@ -20,8 +20,8 @@ endif
 # Warnings:
 CXXFLAGS += -Wall
 
-# Standart:
-CXXFLAGS += --std=c++17 -fPIC
+# Standart:  # Clay layout requires c++20
+CXXFLAGS += --std=c++20 -fPIC
 
 
 # SDL2, libzip and lua

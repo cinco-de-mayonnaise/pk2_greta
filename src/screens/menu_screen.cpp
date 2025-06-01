@@ -572,34 +572,32 @@ void MenuScreen::Draw_Menu_Graphics() {
 		bool wasShowingFPS = Settings.show_fps;
 		int  oldfps = Settings.fps;
 
-		if (Settings.isFullScreen){
-			if (Draw_Menu_Text(tekstit->Get_Text(PK_txt.gfx_fullscreen_on),180,my)){
-				Settings.isFullScreen = false;
-			}
-		} else{
-			if (Draw_Menu_Text(tekstit->Get_Text(PK_txt.gfx_fullscreen_off),180,my)){
-				Settings.isFullScreen = true;
-			}
-		}
-		if (PK2gui::Draw_BoolBox(100, my, Settings.isFullScreen, true)) {
-			Settings.isFullScreen = !Settings.isFullScreen;
-		}
-		my += 40;
+		// TODO: see TODO below, keeping this code as the cursor jumps around significantly less on this code. ??????
+		// if (Settings.isFullScreen){
+		// 	if (Draw_Menu_Text(tekstit->Get_Text(PK_txt.gfx_fullscreen_on),180,my)){
+		// 		Settings.isFullScreen = false;
+		// 	}
+		// } else{
+		// 	if (Draw_Menu_Text(tekstit->Get_Text(PK_txt.gfx_fullscreen_off),180,my)){
+		// 		Settings.isFullScreen = true;
+		// 	}
+		// }
+		// if (PK2gui::Draw_BoolBox(100, my, Settings.isFullScreen, true)) {
+		// 	Settings.isFullScreen = !Settings.isFullScreen;
+		// }
+		// my += 40;
 
+		// TODO: for some absurd reason the cursor position changes radically when switching between fullscreen and windowed. what the heck is going on?
+		drawBoolBoxGroup(Settings.isFullScreen,
+							save_settings,
+							tekstit->Get_Text(PK_txt.gfx_fullscreen_on),
+							tekstit->Get_Text(PK_txt.gfx_fullscreen_off));
 
-		if (PK2gui::Draw_BoolBox(100, my, Settings.show_fps, true)) {
-			Settings.show_fps = !Settings.show_fps;	
-		}
-		if (Settings.show_fps){
-			if (Draw_Menu_Text(tekstit->Get_Text(PK_txt.gfx_showfps_on),180, my)){
-				Settings.show_fps = false;
-			}
-		} else{
-			if (Draw_Menu_Text(tekstit->Get_Text(PK_txt.gfx_showfps_off),180,my)){
-				Settings.show_fps = true;
-			}
-		}
-		my += 40;
+		drawBoolBoxGroup(Settings.show_fps,
+						save_settings,
+						tekstit->Get_Text(PK_txt.gfx_showfps_on),
+						tekstit->Get_Text(PK_txt.gfx_showfps_off));
+
 
 		//TODO - Fix touch position when screen fit
 
@@ -661,11 +659,10 @@ void MenuScreen::Draw_Menu_Graphics() {
 		}
 		//Add more options here
 		if(wasFullScreen != Settings.isFullScreen) {// If fullscreen changes
-			save_settings = true;
+			//save_settings = true; // unnecessary cause drawboolboxgroup updates this var for us
 			PRender::set_fullscreen(Settings.isFullScreen);
 		}
 		if(wasShowingFPS != Settings.show_fps) { // 
-			save_settings = true;
 			show_fps = Settings.show_fps;
 		}
 
@@ -1133,24 +1130,69 @@ void MenuScreen::Draw_Menu_Language() {
 
 }
 
+
 void MenuScreen::Draw_ScrollTest(){
-	int mx = 0, option;
-	this->my = 150;
+	// int mx = 0, option;
+	// this->my = 150;
 	
-	static bool moreOptions = false;
-	bool save_settings = false;
+	// static bool moreOptions = false;
+	// bool save_settings = false;
 
-	Draw_BGSquare(40, 70, 640-40, 410, 224);
+	// Draw_BGSquare(40, 70, 640-40, 410, 224);
 
-	PDraw::font_write_line(fontti2, "scrolling test! aテক্ষাنà",50,90);
+	// PDraw::font_write_line(fontti2, "scrolling test! aテক্ষাنà",50,90);
 
+	Clay_BeginLayout();
+	
+	const char *ddlc_intro = 
+    "Welcome to the Literature Club! It's always been a dream of mine to make something special out of the things I love.\n"
+    "Now that you're a club member, you can help me make that dream come true in this cute game!\n"
+    "\n"
+    "Every day is full of chit-chat and fun activities with all of my adorable and unique club members:\n"
+    "\n"
+    "Sayori, the youthful bundle of sunshine who values happiness the most;\n"
+    "Natsuki, the deceivingly cute girl who packs an assertive punch;\n"
+    "Yuri, the timid and mysterious one who finds comfort in the world of books;\n"
+    "...And, of course, Monika, the leader of the club! That's me!\n"
+    "\n"
+    "I'm super excited for you to make friends with everyone and help the Literature Club become a more intimate place for all my members.\n"
+    "But I can tell already that you're a sweetheart—will you promise to spend the most time with me? ♥\n"
+    "\n"
+    "This game is not suitable for children\n"
+    "or those who are easily disturbed.\n";
 
+	CLAY({
+			.id = CLAY_ID("OuterContainer"), 
+			.layout = { 
+				.sizing = {CLAY_SIZING_FIXED(640), CLAY_SIZING_FIXED(400)}, 
+				.padding = CLAY_PADDING_ALL(16), 
+				.childGap = 5,
+				.layoutDirection = CLAY_TOP_TO_BOTTOM,
+			},
+			.backgroundColor = {.r = 0, .g = 0, .b = 0, .a = 25},
+			.scroll = { .vertical = true }
+		}) 
+	{
+		//CLAY_TEXT(CLAY_STRING("Hi, Monika here!"), CLAY_TEXT_CONFIG({.fontId=fontti2}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+		CLAY_TEXT(ClayUI::MakeClayString(ddlc_intro), CLAY_TEXT_CONFIG({.fontId=fontti1}));
+	}
 
+	auto to_draw = Clay_EndLayout();
+	ClayUI::Draw_ClayLayout(to_draw);
+
+	// fallback so we can escape getting stuck
 	if (Draw_Menu_Text(PK_txt.settingsmenu_return,180,400)){
 		menu_now = MENU_SETTINGS;
-		moreOptions = false;
+		//moreOptions = false;
 	}
 }
+
 
 void MenuScreen::Draw() {
 
@@ -1293,6 +1335,8 @@ void MenuScreen::Loop() {
 	mx = cx;
 	my = cy;
 	mb = cb;
+
+	ClayUI::Update();
 
 	Draw();
 

@@ -6,7 +6,8 @@
 
 #include "screen.hpp"
 #include "widgets.hpp"
-#include <list>
+
+#include "screens/clay_ui.hpp"
 
 enum MENU {
 
@@ -76,14 +77,4 @@ private:
 
     // in-progress: abdullah
     void Draw_ScrollTest();
-
-    class ScrollBox {
-    public:
-        class ScrollItem {
-            int a = 0;
-        };
-
-    private:
-        std::list<ScrollBox::ScrollItem> scrollitems;
-    };
 };

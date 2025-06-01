@@ -5,6 +5,7 @@
 #include "engine/Piste.hpp"
 
 #include "engine/platform.hpp"
+#include "screens/clay_ui.hpp"
 
 #include <SDL.h>
 #include <functional>
@@ -136,6 +137,8 @@ void init(int width, int height, const char* name, const char* icon, int audio_b
 	PRender::init(width, height, name, icon);
 	PInput::init();
 	PSound::init(audio_buffer_size);
+
+	ClayUI::Init();
 
 	ready = true;
 
